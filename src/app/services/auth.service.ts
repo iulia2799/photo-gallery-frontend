@@ -14,9 +14,11 @@ export class AuthService {
   ) { }
 
   registerUser(user: Register) {
-    this.http.post(BACKEND_URL + '/register',user);
+    const response = this.http.post(BACKEND_URL + '/register',user);
+    return response;
   }
   login(user: LoginDto) {
-    this.http.post(BACKEND_URL + '/login',user);
+    const response = this.http.post(BACKEND_URL + '/login',user);
+    return response;
   }
 }

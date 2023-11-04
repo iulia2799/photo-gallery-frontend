@@ -8,10 +8,11 @@ import { BACKEND_URL } from '../utils/constants';
 export class GalleryService {
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+   }
 
   getAllPosts() {
-    this.http.get(BACKEND_URL + "/post");
+    return this.http.get(BACKEND_URL + "/post", {responseType: 'arraybuffer'});
   }
 
 }
