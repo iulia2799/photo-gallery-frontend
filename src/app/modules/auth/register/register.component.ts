@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Register } from 'src/app/models/register';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -23,7 +24,9 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-
+    const value = this.registerForm.value;
+    const user: Register = { ...value}
+    this.service.registerUser(user).pipe().subscribe((response) => console.log(response));
   }
 
 }

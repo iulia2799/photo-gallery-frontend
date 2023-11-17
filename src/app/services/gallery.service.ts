@@ -14,5 +14,4 @@ export class GalleryService {
   getAllPosts() {
     return this.http.get(BACKEND_URL + "/post", {responseType: 'arraybuffer'});
   }
-
 }
