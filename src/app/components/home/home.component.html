@@ -1,9 +1,23 @@
 <ng-container *ngIf="localToken">
+    <div class="gallery-search">
+        <mat-form-field>
+          <input matInput placeholder="Search photos" [(ngModel)]="searchTerm" (input)="filterPhotos()">
+        </mat-form-field>
+      
+        <mat-form-field>
+          <mat-label>Filter by Category</mat-label>
+          <mat-select [(value)]="selectedCategory" (selectionChange)="filterPhotos()">
+            <mat-option *ngFor="let category of photoCategories" [value]="category">
+              {{ category }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     <div class="gallery-container">
         <mat-grid-list cols="3" gutterSize="16px">
-          <mat-grid-tile *ngFor="let photo of photos" [colspan]="photo.cols" [rowspan]="photo.rows">
+          <mat-grid-tile *ngFor="let photo of photos">
             <mat-card>
-              <img mat-card-image [src]="" alt="{{ photo.alt }}">
+              <img [src]="photo.imageString" alt="Image">
               <mat-card-content>
                 <p>{{ photo.description }}</p>
               </mat-card-content>
@@ -11,4 +25,6 @@
           </mat-grid-tile>
         </mat-grid-list>
       </div>
+
+      <img [src]="display" alt="Image">
 </ng-container>

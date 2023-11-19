@@ -8,12 +8,16 @@ import {MatButtonModule} from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreatepostComponent } from './components/createpost/createpost.component';
 import { ViewpostsComponent } from './components/viewposts/viewposts.component';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { ViewpostsComponent } from './components/viewposts/viewposts.component';
     MatInputModule,
     HttpClientModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
