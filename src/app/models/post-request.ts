@@ -1,5 +1,5 @@
 export class PostRequest {
     description?: string;
-    image?: Blob[];
+    image?: Uint8Array;
     imageExtenstion?: string;
 }

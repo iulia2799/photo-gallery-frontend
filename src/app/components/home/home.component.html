@@ -1,30 +1,29 @@
 <ng-container *ngIf="localToken">
-    <div class="gallery-search">
-        <mat-form-field>
-          <input matInput placeholder="Search photos" [(ngModel)]="searchTerm" (input)="filterPhotos()">
-        </mat-form-field>
-      
-        <mat-form-field>
-          <mat-label>Filter by Category</mat-label>
-          <mat-select [(value)]="selectedCategory" (selectionChange)="filterPhotos()">
-            <mat-option *ngFor="let category of photoCategories" [value]="category">
-              {{ category }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    <div class="gallery-container">
-        <mat-grid-list cols="3" gutterSize="16px">
-          <mat-grid-tile *ngFor="let photo of photos">
-            <mat-card>
-              <img [src]="photo.imageString" alt="Image">
-              <mat-card-content>
-                <p>{{ photo.description }}</p>
-              </mat-card-content>
-            </mat-card>
-          </mat-grid-tile>
-        </mat-grid-list>
+  <div class="gallery-search">
+    <mat-form-field>
+      <input matInput placeholder="Search photos" [(ngModel)]="searchTerm" (input)="filterPhotos()">
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="goToCreate()">Post an Image</button>
+
+    <mat-form-field>
+      <mat-label>Filter by Category</mat-label>
+      <mat-select [(value)]="selectedCategory" (selectionChange)="filterPhotos()">
+        <mat-option *ngFor="let category of photoCategories" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-grid-list cols="4" rowHeight="400px" class="gallery-container" *ngIf="!isLoading">
+    <mat-grid-tile *ngFor="let photo of photos">
+      <div class="grid-tile">
+        <img [src]="photo?.imageString" style="width: 200px; height: 200px;" (click)="goToView(photo?.id ?? '')">
+        <div style="height: 4px;">
+        </div>
+        <p>{{photo?.description}}</p>
       </div>
 
-      <img [src]="display" alt="Image">
+    </mat-grid-tile>
+  </mat-grid-list>
 </ng-container>

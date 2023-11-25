@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { Register } from 'src/app/models/register';
 import { AuthService } from 'src/app/services/auth.service';
+import { TOKEN } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +39,7 @@ export class RegisterComponent implements OnInit {
           duration: 5000
         });
       } else {
-        localStorage.setItem('loginToken', response);
+        localStorage.setItem(TOKEN, response);
         this.router.navigate(['../home'], { relativeTo: this.route.parent});
       }
     })

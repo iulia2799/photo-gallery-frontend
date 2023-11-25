@@ -14,3 +14,8 @@ mat-card {
     justify-content: space-between;
     margin: 16px;
 }
+
+.grid-tile {
+    display: flex;
+    flex-direction: column;
+}
