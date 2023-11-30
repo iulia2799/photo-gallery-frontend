@@ -1,13 +1,26 @@
-<form [formGroup]="imageForm" (ngSubmit)="onSubmit()">
-    <input type="file" (change)="onFileChange($event)" accept="image/*">
-    <button mat-raised-button color="accent" type="submit" [disabled]="imageForm.invalid">Upload Image</button>
-    <div style="height: 8px;">
-    </div>
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput type="text" formControlName="description" placeholder="Please provide a description">
-    </mat-form-field>
-  </form>
-  
-  <!-- Display the uploaded image -->
-  <img [src]="imageForm.value.image" *ngIf="imageForm.value.image" alt="Uploaded Image">
+<div class="create-post">
+    <mat-card>
+        <mat-card-title>
+            Create a Post
+        </mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="imageForm">
+                <input type="file" (change)="onFileChange($event)" accept="image/*">
+                <div style="height: 8px;">
+                </div>
+                <mat-form-field>
+                    <mat-label>Description</mat-label>
+                    <input matInput type="text" formControlName="description"
+                        placeholder="Please provide a description">
+                </mat-form-field>
+            </form>
+
+            <!-- Display the uploaded image -->
+            <img [src]="imageForm.value.image" *ngIf="imageForm.value.image" alt="Uploaded Image">
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="accent" (click)="onSubmit()" [disabled]="imageForm.invalid">Upload
+                Image</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

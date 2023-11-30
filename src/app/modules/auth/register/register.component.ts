@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, of } from 'rxjs';
+import { Subject, catchError, of, takeUntil } from 'rxjs';
 import { Register } from 'src/app/models/register';
 import { AuthService } from 'src/app/services/auth.service';
 import { TOKEN } from 'src/app/utils/constants';
@@ -13,9 +13,10 @@ import { TOKEN } from 'src/app/utils/constants';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   registerForm!: FormGroup;
+  destroy$: Subject<void> = new Subject<void>();
 
   constructor(public route: ActivatedRoute, public router: Router, public service: AuthService, public fb: FormBuilder, private snackBar: MatSnackBar) {
     this.registerForm = this.fb.group({
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
   register() {
     const value = this.registerForm.value;
     const user: Register = { ...value}
-    this.service.registerUser(user).pipe(catchError((err: any) => {
+    this.service.registerUser(user).pipe(takeUntil(this.destroy$), catchError((err: any) => {
       return of(err);
     })).subscribe((response) => {
       if(response instanceof HttpErrorResponse) {
@@ -45,4 +46,7 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+  }
 }

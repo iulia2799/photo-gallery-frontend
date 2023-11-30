@@ -21,7 +21,7 @@ export class GalleryService {
   }
 
   post(post: PostRequest) {
-    return this.http.post(BACKEND_URL + GET_POSTS_PATH + '/', post, {
+    return this.http.post(BACKEND_URL + GET_POSTS_PATH, post, {
       headers: {
         'Authorization': 'Bearer ' + (localStorage.getItem(TOKEN) ?? '')
       }
@@ -29,7 +29,7 @@ export class GalleryService {
   }
 
   getPostById(id: string) {
-    return this.http.post(BACKEND_URL + GET_POSTS_PATH + '/' + id, {
+    return this.http.get(BACKEND_URL + GET_POSTS_PATH + '/' + id, {
       headers: {
         'Authorization': 'Bearer ' + (localStorage.getItem(TOKEN) ?? '')
       }
