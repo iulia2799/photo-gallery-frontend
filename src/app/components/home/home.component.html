@@ -6,17 +6,17 @@
 
     <button mat-raised-button color="accent" (click)="goToCreate()">Post an Image</button>
 
-    <mat-form-field>
+    <!-- <mat-form-field>
       <mat-label>Filter by Category</mat-label>
       <mat-select [(value)]="selectedCategory" (selectionChange)="filterPhotos()">
         <mat-option *ngFor="let category of photoCategories" [value]="category">
           {{ category }}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
   </div>
   <mat-grid-list cols="4" rowHeight="400px" class="gallery-container" *ngIf="!isLoading">
-    <mat-grid-tile *ngFor="let photo of photos">
+    <mat-grid-tile *ngFor="let photo of filteredPhotos">
       <div class="grid-tile">
         <img [src]="photo?.imageString" style="width: 200px; height: 200px;" (click)="goToView(photo?.id ?? '')">
         <div style="height: 4px;">

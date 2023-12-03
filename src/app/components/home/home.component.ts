@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   photos: PostResponse[] = [
   ];
   photoCategories = [...new Set(this.photos.map(photo => photo.description))];
-  filteredPhotos = this.photos;
+  filteredPhotos: PostResponse[] = [];
   searchTerm = '';
   selectedCategory = '';
   display: any;
@@ -37,14 +37,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       }), finalize(() => this.isLoading = false)).subscribe((response) => {
         console.log(response)
         this.photos = response;
+        this.filteredPhotos = response;
       });
   }
 
   filterPhotos() {
-    this.filteredPhotos = this.photos.filter(photo =>
-      photo.uid?.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
-      (this.selectedCategory === '' || photo.uid === this.selectedCategory)
+    const filteredPhotos = this.photos.filter(photo =>
+      photo?.description?.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+    this.filteredPhotos = filteredPhotos;
   }
 
   goToCreate() {
