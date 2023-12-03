@@ -1,1 +1,14 @@
-<p>viewposts works!</p>
+<div class="view-post">
+    <mat-card>
+        <mat-card-title>
+            View Image with id: {{id}}
+        </mat-card-title>
+        <mat-card-content *ngIf="post">
+            <img [src]="image" alt="Image">
+            <div style="height: 16px"></div>
+            <div class="description">
+                <p> {{post.description}} </p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

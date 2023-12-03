@@ -1,0 +1,18 @@
+.create-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+mat-card {
+    margin : 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    background-color: rgb(25, 129, 122);
+}
+
+mat-card-title {
+    color: white;
+    margin: 16px;
+}
