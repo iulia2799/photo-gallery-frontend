@@ -9,7 +9,7 @@ import { ViewpostsComponent } from "./components/viewposts/viewposts.component";
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'auth',
+        redirectTo: 'home',
         pathMatch: 'full'
     },
     {

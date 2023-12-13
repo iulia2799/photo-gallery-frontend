@@ -25,12 +25,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   constructor(private galleryService: GalleryService, private router: Router, private route: ActivatedRoute) {
-    console.log(this.localToken)
   }
   ngOnInit(): void {
     this.galleryService.getAllPosts().pipe(takeUntil(this.destroy$), catchError((error: any) => of(error)),
       map((results: PostResponse[]) => {
-        for(let item of results) {
+        for (let item of results) {
           item.imageString = decodeAndDisplayImage(item.imageString ?? '');
         }
         return results;
@@ -49,15 +48,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   goToCreate() {
-    this.router.navigate(['../create'],{
+    this.router.navigate(['../create'], {
       relativeTo: this.route.parent
     });
   }
 
   goToView(id: string) {
     console.log(id)
-    if(id === '') return;
-    this.router.navigate(['../view',id], {
+    if (id === '') return;
+    this.router.navigate(['../view', id], {
+      relativeTo: this.route.parent
+    })
+  }
+
+  goToAccount() {
+    this.router.navigate(['../auth'], {
       relativeTo: this.route.parent
     })
   }

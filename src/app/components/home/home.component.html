@@ -1,10 +1,15 @@
-<ng-container *ngIf="localToken">
+<ng-container>
   <div class="gallery-search">
     <mat-form-field>
       <input matInput placeholder="Search photos" [(ngModel)]="searchTerm" (input)="filterPhotos()">
     </mat-form-field>
-
-    <button mat-raised-button color="accent" (click)="goToCreate()">Post an Image</button>
+    <ng-container *ngIf="localToken; else guest">
+      <button mat-raised-button color="accent" (click)="goToCreate()">Post an Image</button>
+      </ng-container>
+      <ng-template #guest>
+        <button mat-raised-button color="accent" (click)="goToAccount()">Login/Sign Up to Post</button>
+      </ng-template>
+    
 
     <!-- <mat-form-field>
       <mat-label>Filter by Category</mat-label>
@@ -21,7 +26,7 @@
         <img [src]="photo?.imageString" style="width: 200px; height: 200px;" (click)="goToView(photo?.id ?? '')">
         <div style="height: 4px;">
         </div>
-        <p>{{photo?.description}}</p>
+        <p style="color:white">{{photo?.description}}</p>
       </div>
 
     </mat-grid-tile>
