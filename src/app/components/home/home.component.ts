@@ -41,10 +41,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   filterPhotos() {
-    const filteredPhotos = this.photos.filter(photo =>
-      photo?.description?.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-    this.filteredPhotos = filteredPhotos;
+    this.isLoading = true;
+    // const filteredPhotos = this.photos.filter(photo =>
+    //   photo?.description?.toLowerCase().includes(this.searchTerm.toLowerCase())
+    // );
+    // this.filteredPhotos = filteredPhotos;
+    this.galleryService.getAllPosts(this.searchTerm.toLowerCase()).pipe(takeUntil(this.destroy$), catchError((error: any) => of(error)), 
+      map((results: PostResponse[]) => {
+        for(let item of results) {
+          item.imageString = decodeAndDisplayImage(item.imageString ?? '');
+        }
+        return results;
+      }), finalize(() => this.isLoading = false)).subscribe((response) => {
+        console.log(response)
+        this.filteredPhotos = response;
+      })
   }
 
   goToCreate() {

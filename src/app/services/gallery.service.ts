@@ -12,8 +12,9 @@ export class GalleryService {
   ) {
   }
 
-  getAllPosts() {
-    return this.http.get(BACKEND_URL + GET_POSTS_PATH, {
+  getAllPosts(filter?: string) {
+    let searchTerm = filter?.length ?  "/filter/" + filter : '';
+    return this.http.get(BACKEND_URL + GET_POSTS_PATH + searchTerm, {
       headers: {
         'Authorization': 'Bearer ' + (localStorage.getItem(TOKEN) ?? '')
       }
