@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   goToView(id: string) {
     console.log(id)
-    if (id === '') return;
+    if (id === '' || !this.localToken) return;
     this.router.navigate(['../view', id], {
       relativeTo: this.route.parent
     })
