@@ -4,6 +4,7 @@ import { PostResponse } from 'src/app/models/post-response';
 import { GalleryService } from 'src/app/services/gallery.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { decodeAndDisplayImage } from 'src/app/utils/functions';
+import { TOKEN } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private galleryService: GalleryService, private router: Router, private route: ActivatedRoute) {
   }
   ngOnInit(): void {
-    this.galleryService.getAllPosts().pipe(takeUntil(this.destroy$), catchError((error: any) => of(error)),
+    this.galleryService.getAllPosts().pipe(takeUntil(this.destroy$), catchError((error: any) => {
+      if(error.status === 401) {
+        localStorage.removeItem(TOKEN);
+        this.router.navigate(['/']);
+      }
+      return of(error)
+    }
+    ),
       map((results: PostResponse[]) => {
         for (let item of results) {
           item.imageString = decodeAndDisplayImage(item.imageString ?? '');
@@ -46,9 +54,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     //   photo?.description?.toLowerCase().includes(this.searchTerm.toLowerCase())
     // );
     // this.filteredPhotos = filteredPhotos;
-    this.galleryService.getAllPosts(this.searchTerm.toLowerCase()).pipe(takeUntil(this.destroy$), catchError((error: any) => of(error)), 
+    this.galleryService.getAllPosts(this.searchTerm.toLowerCase()).pipe(takeUntil(this.destroy$), catchError((error: any) => {
+      if(error.status === 401) {
+        localStorage.removeItem(TOKEN);
+        this.router.navigate(['/']);
+      }
+      return of(error)
+    }
+    ),
       map((results: PostResponse[]) => {
-        for(let item of results) {
+        for (let item of results) {
           item.imageString = decodeAndDisplayImage(item.imageString ?? '');
         }
         return results;

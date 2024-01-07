@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Subject, catchError, of, takeUntil } from 'rxjs';
 import { PostRequest } from 'src/app/models/post-request';
 import { GalleryService } from 'src/app/services/gallery.service';
@@ -18,7 +19,7 @@ export class CreatepostComponent implements OnInit, OnDestroy{
   localToken?: string | null;
   destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private service: GalleryService, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private service: GalleryService, private snackBar: MatSnackBar, private router: Router) {
     this.imageForm = this.fb.group({
       image: [''],
       description: [''],
@@ -55,6 +56,10 @@ export class CreatepostComponent implements OnInit, OnDestroy{
       image: base64String
     };
     this.service.post(body).pipe(takeUntil(this.destroy$), catchError(err => {
+      if(err.status === 401) {
+        localStorage.removeItem(TOKEN);
+        this.router.navigate(['/']);
+      }
       return of(err);
     })).subscribe(response => {
       if(response instanceof HttpErrorResponse) {
