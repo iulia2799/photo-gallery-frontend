@@ -46,22 +46,11 @@ export class ViewpostsComponent implements OnInit, OnDestroy{
   }
 
   downloadImage() {
-    // Create a new anchor element
     const link = document.createElement('a');
-
-    // Set the href attribute with the base64 data
     link.href = this.image;
-
-    // Set the download attribute with the desired file name
     link.download = this.post.storagePath ?? "donwload.jpg";
-
-    // Append the anchor to the document
     document.body.appendChild(link);
-
-    // Trigger a click on the anchor element
     link.click();
-
-    // Remove the anchor from the document
     document.body.removeChild(link);
   }
 
